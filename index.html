@@ -1,0 +1,86 @@
+<script>
+    // Updated mock database with multiple entries
+    const cnicData = {
+        '03154826087': {
+            image: 'https://files.catbox.moe/f3jft4.jpg',
+            details: `Name: John Wick
+Father: Patrick Wick
+DOB: 12-09-1985
+Address: Continental Hotel, New York`
+        },
+        '03001234567': {
+            image: 'https://files.catbox.moe/dljuux.jpg',
+            details: `Name: Sarah Connor
+Father: Kyle Reese
+DOB: 28-02-1995
+Address: Cyberdyne Systems`
+        },
+        '03331112222': {
+            image: 'https://files.catbox.moe/rpzre4.jpg',
+            details: `Name: Neo Anderson
+Father: Thomas Anderson
+DOB: 11-11-1999
+Address: Matrix Construct`
+        }
+    };
+
+    function hack() {
+        const userInput = document.getElementById('mobileInput').value.trim();
+        const cleanNumber = userInput.replace(/[^0-9]/g, ''); // Remove non-numeric chars
+        
+        if(cleanNumber.length !== 11) {
+            showError('Invalid number! Must be 11 digits');
+            return;
+        }
+
+        const result = cnicData[cleanNumber];
+        
+        // Hacker sound effect
+        const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
+        audio.play();
+
+        // Hacking animation
+        startGlitchEffect();
+
+        setTimeout(() => {
+            if(result) {
+                document.getElementById('cnicImage').src = result.image;
+                document.getElementById('details').textContent = result.details;
+                document.getElementById('enteredNumber').innerHTML = 
+                    `<span style="color:#ff0">TARGET:</span> ${cleanNumber}`;
+                document.getElementById('result').style.display = 'block';
+            } else {
+                showError('TARGET LOST IN DARK WEB... TRY AGAIN');
+            }
+            stopGlitchEffect();
+        }, 3000);
+    }
+
+    // New error handling function
+    function showError(msg) {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.color = '#f00';
+        errorDiv.innerHTML = `🚨 ${msg}`;
+        errorDiv.id = 'errorMsg';
+        document.body.appendChild(errorDiv);
+        
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 3000);
+    }
+
+    // Advanced glitch effect
+    let glitchInterval;
+    function startGlitchEffect() {
+        const container = document.querySelector('.container');
+        glitchInterval = setInterval(() => {
+            container.style.transform = `translate(${Math.random()*4-2}px, ${Math.random()*4-2}px)`;
+            container.style.clipPath = `inset(${Math.random()*5}% ${Math.random()*5}% ${Math.random()*5}% ${Math.random()*5}%)`;
+        }, 50);
+    }
+
+    function stopGlitchEffect() {
+        clearInterval(glitchInterval);
+        document.querySelector('.container').style.transform = 'none';
+    }
+</script>
